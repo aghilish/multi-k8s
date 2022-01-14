@@ -1,0 +1,9 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - openssl aes-256-cbc -K $encrypted_31eb7f058ece_key -iv $encrypted_31eb7f058ece_iv -in travis-deployer-sa.json.enc -out travis-deployer-sa.json -d
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  - gcloud components update kubectl
+  - gcloud auth activate-service-account --key-file travis-deployer-sa.json
